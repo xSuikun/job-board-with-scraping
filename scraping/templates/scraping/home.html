@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Job Board{% endblock %}
+
+{% block content%}
+{% include 'scraping/_search_form.html' %}
+{% for vacancy in vacancies %}
+<div class="card my-3">
+    <div class="card-header">
+        {{ vacancy.company }}
+    </div>
+    <div class="card-body">
+        <h5 class="card-title"><a href="{{ vacancy.url }}">{{ vacancy.title }}</a></h5>
+        <p class="card-text">{{ vacancy.description }}</p>
+        <p class="card-text">
+            {% if vacancy.programming_language %}{{ vacancy.programming_language }} | {% endif %}
+            {% if vacancy.city.name %}{{ vacancy.city.name }} | {% endif %}
+            {{ vacancy.timestamp|date:"d.m.Y" }}
+        </p>
+        <a href="#" class="btn btn-primary">Посмотреть</a>
+    </div>
+</div>
+{% empty %}
+<h3 class="text-center mt-5">Не найдени ни одной записи :(</h3>
+{% endfor %}
+{% endblock %}
